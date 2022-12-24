@@ -16,6 +16,10 @@ queue *create_queue()
     Q->capacity=max_size;
     return Q;
 }
+int queue_size(queue *Q)
+{
+    return (Q->rear)-(Q->front)+1;
+}
 int isempty(queue *Q)
 {
     return (Q->front==-1)?1:0;
@@ -76,6 +80,7 @@ int main()
     enqueue(Q,10);
     enqueue(Q,20);
     enqueue(Q,30);
+    cout<<"size of queue is currently : "<<queue_size(Q)<<endl;
     enqueue(Q,40);
     enqueue(Q,50);
     enqueue(Q,60);
