@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define max_size 5
+#define max_size 6
 class Queue{
 public:
     int front;
@@ -33,7 +33,7 @@ int isempty(Queue *q)
 }
 int isfull(Queue *q)
 {
-    if(q->front+1==max_size)
+    if(q->front+1==q->rear)
     {
         return 1;
     }
@@ -79,25 +79,34 @@ void push(Stack *s,int data)
 {
     if(isempty(s->q1))
     {
-        enqueue(s->q2,data);
+        enqueue(s->q1,data);
     }
     else
-        enqueue(s->q1,data);
+        enqueue(s->q2,data);
 }
 int pop(Stack *s)
 {
     int value=dequeue(s->q1);
-    int i;
+    int size=(s->q1)->rear-(s->q1)->front+1;
+    int i=0;
     if(isempty(s->q2))
     {
-        i=(s->q1)->front;
-        while(i<(s->q1)->rear-1)
+        while(i<size-1)
         {
             enqueue(s->q2,dequeue(s->q1));
             i++;
         }
+        return dequeue(s->q1);
     }
-    return dequeue(s->q1);
+    else
+    {
+        while(i<size-1)
+        {
+            enqueue(s->q1,dequeue(s->q2));
+            i++;
+        }
+        return dequeue(s->q2);
+    }
 }
 int main()
 {
