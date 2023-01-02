@@ -33,7 +33,7 @@ int isempty(Queue *q)
 }
 int isfull(Queue *q)
 {
-    if(q->front+1==q->rear)
+    if(q->front+1==max_size)
     {
         return 1;
     }
@@ -73,11 +73,11 @@ int dequeue(Queue *q)
     {
         q->front=(q->front+1)%max_size;
     }
-    return item;
+    return q->arr[item];
 }
 void push(Stack *s,int data)
 {
-    if(isempty(s->q1))
+    if(isempty(s->q2))
     {
         enqueue(s->q1,data);
     }
@@ -86,12 +86,12 @@ void push(Stack *s,int data)
 }
 int pop(Stack *s)
 {
-    int value=dequeue(s->q1);
-    int size=(s->q1)->rear-(s->q1)->front+1;
+    int size1=(s->q1)->rear-(s->q1)->front+1;
+    int size2=(s->q2)->rear-(s->q2)->front+1;
     int i=0;
     if(isempty(s->q2))
     {
-        while(i<size-1)
+        while(i<size1-1)
         {
             enqueue(s->q2,dequeue(s->q1));
             i++;
@@ -100,7 +100,7 @@ int pop(Stack *s)
     }
     else
     {
-        while(i<size-1)
+        while(i<size2-1)
         {
             enqueue(s->q1,dequeue(s->q2));
             i++;
@@ -115,5 +115,6 @@ int main()
     push(s,20);
     push(s,30);
     push(s,40);
+    cout<<pop(s)<<endl;
     cout<<pop(s);
 }
